@@ -8,130 +8,212 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <span class="logo-icon">VoteReady India</span>
-                    <div class="logo-text">
-                        <h1>Election Guide Assistant</h1>
-                        <p class="subtitle">Your personal voting co-pilot for India</p>
-                    </div>
+        <section class="landing-page" id="landingPage">
+            <header class="landing-header">
+                <div class="landing-brand">Election Guide Assistant (India)</div>
+                <button type="button" class="landing-ghost-btn" id="heroHowItWorksTop">How it Works</button>
+            </header>
+
+            <section class="hero-section fade-up">
+                <p class="hero-badge">Civic-tech assistant</p>
+                <h1>Election Guide Assistant (India)</h1>
+                <p class="hero-subtitle">Understand voting, eligibility, and the election process — step by step.</p>
+                <p class="hero-copy">
+                    A clean, guided assistant that helps first-time and returning voters with practical next steps.
+                    No confusion, only what to do next.
+                </p>
+                <div class="hero-actions">
+                    <button type="button" class="landing-primary-btn" id="heroGetStarted">Get Started</button>
+                    <button type="button" class="landing-secondary-btn" id="heroHowItWorks">How it Works</button>
                 </div>
-                <button class="language-toggle" id="languageToggle" title="Switch language">
-                    EN / Hinglish
-                </button>
+            </section>
+
+            <section class="landing-section fade-up">
+                <h2>Built for real voter needs</h2>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">🧭</div>
+                        <h3>Step-by-step voting guide</h3>
+                        <p>Clear instructions from eligibility to polling day, without legal jargon.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3>Smart eligibility checker</h3>
+                        <p>Understands your age and voter ID status to tell you exactly what to do now.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Simple explanations</h3>
+                        <p>EVM, NOTA, voter list, and registration explained in plain English + Hinglish.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Personalized assistance</h3>
+                        <p>State-aware support and action-oriented follow-ups, tailored to each user.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="landing-section fade-up" id="howItWorksSection">
+                <h2>How It Works</h2>
+                <div class="how-grid">
+                    <article class="how-step-card">
+                        <span class="how-step-number">1</span>
+                        <h3>Answer a few questions</h3>
+                        <p>Share age, voter ID status, and your state.</p>
+                    </article>
+                    <article class="how-step-card">
+                        <span class="how-step-number">2</span>
+                        <h3>Get personalized guidance</h3>
+                        <p>Receive practical next steps based on your profile.</p>
+                    </article>
+                    <article class="how-step-card">
+                        <span class="how-step-number">3</span>
+                        <h3>Be ready to vote</h3>
+                        <p>Use the final readiness checklist and official links confidently.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="landing-section trust-section fade-up">
+                <h2>Grounded in real Indian election context</h2>
+                <p>
+                    This assistant follows Election Commission of India guidance patterns and points users to official
+                    channels like ECI and Electoral Search for verification and action.
+                </p>
+                <div class="trust-links">
+                    <a href="https://eci.gov.in/" target="_blank" rel="noreferrer">Election Commission of India</a>
+                    <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noreferrer">Electoral Search Portal</a>
+                </div>
+            </section>
+
+            <section class="landing-cta fade-up">
+                <h2>Ready to plan your vote?</h2>
+                <p>Start now and get a personalized election action plan in under a minute.</p>
+                <button type="button" class="landing-primary-btn" id="landingStartNow">Start Now</button>
+            </section>
+
+            <footer class="landing-footer">
+                <p><strong>Election Guide Assistant (India)</strong> — Helping citizens understand and act on voting steps.</p>
+            </footer>
+        </section>
+
+        <div class="app-shell" id="appShell" aria-hidden="true">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <span class="logo-icon">VoteReady India</span>
+                        <div class="logo-text">
+                            <h1>Election Guide Assistant</h1>
+                            <p class="subtitle">Your personal voting co-pilot for India</p>
+                        </div>
+                    </div>
+                    <button class="language-toggle" id="languageToggle" title="Switch language">
+                        EN / Hinglish
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Left Sidebar - Progress Tracker -->
+                <aside class="sidebar">
+                    <div class="progress-section">
+                        <h3 class="section-title">Journey Progress</h3>
+                        <div class="progress-tracker">
+                            <div class="progress-step active" id="step-1">
+                                <div class="progress-dot">1</div>
+                                <span class="step-label">Eligibility</span>
+                            </div>
+                            <div class="progress-bar"></div>
+                            <div class="progress-step" id="step-2">
+                                <div class="progress-dot">2</div>
+                                <span class="step-label">Registration</span>
+                            </div>
+                            <div class="progress-bar"></div>
+                            <div class="progress-step" id="step-3">
+                                <div class="progress-dot">3</div>
+                                <span class="step-label">Voting Day</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-section" style="margin-top: 30px;">
+                        <h3 class="section-title">Action Timeline</h3>
+                        <div class="timeline" id="timelineCards">
+                            <div class="timeline-item">
+                                <div class="timeline-dot">1</div>
+                                <div class="timeline-content">
+                                    <p class="timeline-date">Today</p>
+                                    <p class="timeline-label">Check eligibility and status</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot">2</div>
+                                <div class="timeline-content">
+                                    <p class="timeline-date">Before deadline</p>
+                                    <p class="timeline-label">Register or correct details</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot">3</div>
+                                <div class="timeline-content">
+                                    <p class="timeline-date">Polling day</p>
+                                    <p class="timeline-label">Carry valid ID and vote confidently</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="quick-links-section" style="margin-top: 30px;">
+                        <h3 class="section-title">Trusted Links</h3>
+                        <a href="https://eci.gov.in/" target="_blank" class="quick-link">
+                            <span>Election Commission India</span>
+                        </a>
+                        <a href="https://electoralsearch.eci.gov.in/" target="_blank" class="quick-link">
+                            <span>Search voter status</span>
+                        </a>
+                        <a href="tel:1950" class="quick-link">
+                            <span>Voter helpline: 1950</span>
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- Chat Area -->
+                <main class="chat-area">
+                    <section class="welcome-panel" id="welcomePanel">
+                        <p class="welcome-eyebrow">Civic-tech assistant</p>
+                        <h2>Plan your vote in under 60 seconds.</h2>
+                        <p class="welcome-copy">Answer a few quick questions and get personalized next steps for eligibility, registration, and polling day. Works in English + Hinglish.</p>
+                        <div class="welcome-actions">
+                            <button type="button" class="welcome-cta strong" data-action="start-journey">Start my journey</button>
+                            <button type="button" class="welcome-cta" data-action="quick-ready">Check if I am ready</button>
+                        </div>
+                    </section>
+
+                    <div class="messages-container" id="messagesContainer">
+                    </div>
+
+                    <div class="input-area">
+                        <form class="message-form" id="messageForm">
+                            <input 
+                                type="text" 
+                                class="message-input" 
+                                id="messageInput" 
+                                placeholder="Ask in English or Hinglish... e.g. I am 19 and don't have voter ID"
+                                autocomplete="off"
+                            >
+                            <button type="submit" class="send-button" title="Send message">
+                                <span>Ask</span>
+                                <span class="send-icon">➤</span>
+                            </button>
+                        </form>
+                        <div class="input-hints" id="quickRepliesBar"></div>
+                    </div>
+                </main>
             </div>
-        </header>
-
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <!-- Left Sidebar - Progress Tracker -->
-            <aside class="sidebar">
-                <div class="progress-section">
-                    <h3 class="section-title">Journey Progress</h3>
-                    <div class="progress-tracker">
-                        <div class="progress-step active" id="step-1">
-                            <div class="progress-dot">1</div>
-                            <span class="step-label">Eligibility</span>
-                        </div>
-                        <div class="progress-bar"></div>
-                        <div class="progress-step" id="step-2">
-                            <div class="progress-dot">2</div>
-                            <span class="step-label">Registration</span>
-                        </div>
-                        <div class="progress-bar"></div>
-                        <div class="progress-step" id="step-3">
-                            <div class="progress-dot">3</div>
-                            <span class="step-label">Voting Day</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-section" style="margin-top: 30px;">
-                    <h3 class="section-title">Action Timeline</h3>
-                    <div class="timeline" id="timelineCards">
-                        <div class="timeline-item">
-                            <div class="timeline-dot">1</div>
-                            <div class="timeline-content">
-                                <p class="timeline-date">Today</p>
-                                <p class="timeline-label">Check eligibility and status</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot">2</div>
-                            <div class="timeline-content">
-                                <p class="timeline-date">Before deadline</p>
-                                <p class="timeline-label">Register or correct details</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot">3</div>
-                            <div class="timeline-content">
-                                <p class="timeline-date">Polling day</p>
-                                <p class="timeline-label">Carry valid ID and vote confidently</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="quick-links-section" style="margin-top: 30px;">
-                    <h3 class="section-title">Trusted Links</h3>
-                    <a href="https://eci.gov.in/" target="_blank" class="quick-link">
-                        <span>Election Commission India</span>
-                    </a>
-                    <a href="https://electoralsearch.eci.gov.in/" target="_blank" class="quick-link">
-                        <span>Search voter status</span>
-                    </a>
-                    <a href="tel:1950" class="quick-link">
-                        <span>Voter helpline: 1950</span>
-                    </a>
-                </div>
-            </aside>
-
-            <!-- Chat Area -->
-            <main class="chat-area">
-                <section class="welcome-panel" id="welcomePanel">
-                    <p class="welcome-eyebrow">Civic-tech assistant</p>
-                    <h2>Plan your vote in under 60 seconds.</h2>
-                    <p class="welcome-copy">Answer a few quick questions and get personalized next steps for eligibility, registration, and polling day. Works in English + Hinglish.</p>
-                    <div class="welcome-actions">
-                        <button type="button" class="hint-button strong" data-action="start-journey">Start my journey</button>
-                        <button type="button" class="hint-button" data-action="quick-ready">Check if I am ready</button>
-                    </div>
-                </section>
-
-                <div class="messages-container" id="messagesContainer">
-                </div>
-
-                <div class="input-area">
-                    <form class="message-form" id="messageForm">
-                        <input 
-                            type="text" 
-                            class="message-input" 
-                            id="messageInput" 
-                            placeholder="Ask in English or Hinglish... e.g. I am 19 and don't have voter ID"
-                            autocomplete="off"
-                        >
-                        <button type="submit" class="send-button" title="Send message">
-                            <span>Ask</span>
-                            <span class="send-icon">➤</span>
-                        </button>
-                    </form>
-                    <div class="input-hints">
-                        <button type="button" class="hint-button" data-action="start-journey">
-                            <span>Start onboarding</span>
-                        </button>
-                        <button type="button" class="hint-button" data-action="registration-help">
-                            <span>Registration help</span>
-                        </button>
-                        <button type="button" class="hint-button" data-action="evm-explainer">
-                            <span>EVM in simple words</span>
-                        </button>
-                    </div>
-                </div>
-            </main>
         </div>
 
         <datalist id="stateSuggestions"></datalist>

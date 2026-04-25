@@ -4,22 +4,25 @@
  */
 const app = {
     isLoading: false,
-    currentLanguage: 'english'
+    currentLanguage: 'english',
+    hasStarted: false
 };
 
 function initializeApp() {
     setupEventListeners();
     hydrateFromSession();
-    renderWelcomeMessage();
     populateStateSuggestions();
-    updateProgressTracker();
 }
 
 function setupEventListeners() {
     document.getElementById('messageForm').addEventListener('submit', handleMessageSubmit);
     document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+    document.getElementById('heroGetStarted').addEventListener('click', startAssistantExperience);
+    document.getElementById('landingStartNow').addEventListener('click', startAssistantExperience);
+    document.getElementById('heroHowItWorks').addEventListener('click', scrollToHowItWorks);
+    document.getElementById('heroHowItWorksTop').addEventListener('click', scrollToHowItWorks);
 
-    document.querySelectorAll('.hint-button').forEach((btn) => {
+    document.querySelectorAll('.welcome-cta').forEach((btn) => {
         btn.addEventListener('click', () => handlePresetAction(btn.dataset.action));
     });
 }
@@ -94,18 +97,13 @@ function removeTypingIndicator() {
 }
 
 function renderWelcomeMessage() {
-    const profile = assistant.getUserProfile();
-    if (profile.age) {
-        addMessageToChat('Welcome back. I can continue your voting plan from where you left.', 'assistant');
-    } else {
-        addMessageToChat('Hi! I am your Election Guide Assistant. I will quickly help you with eligibility, registration, and polling day steps.', 'assistant');
-        addMessageToChat('Start by telling me your age.', 'assistant');
-    }
+    const messages = assistant.getWelcomeMessages();
+    messages.forEach((message) => addMessageToChat(message, 'assistant'));
     renderDynamicQuickReplies();
 }
 
 function renderDynamicQuickReplies() {
-    const hints = document.querySelector('.input-hints');
+    const hints = document.getElementById('quickRepliesBar');
     hints.innerHTML = '';
     assistant.getQuickReplies().forEach((item) => {
         const btn = document.createElement('button');
@@ -118,6 +116,7 @@ function renderDynamicQuickReplies() {
 }
 
 function handlePresetAction(action) {
+    if (app.isLoading) return;
     const map = {
         'start-journey': 'Start onboarding',
         'quick-ready': 'Give my final checklist',
@@ -163,6 +162,30 @@ function hydrateFromSession() {
     if (!s) return;
     app.currentLanguage = s.language || 'english';
     document.getElementById('languageToggle').textContent = app.currentLanguage === 'english' ? 'EN / Hinglish' : 'Hinglish / EN';
+}
+
+function startAssistantExperience() {
+    if (app.hasStarted) return;
+    app.hasStarted = true;
+
+    const landing = document.getElementById('landingPage');
+    const shell = document.getElementById('appShell');
+
+    landing.style.display = 'none';
+    shell.classList.add('active');
+    shell.setAttribute('aria-hidden', 'false');
+
+    renderWelcomeMessage();
+    updateProgressTracker();
+
+    const input = document.getElementById('messageInput');
+    if (input) input.focus();
+}
+
+function scrollToHowItWorks() {
+    const section = document.getElementById('howItWorksSection');
+    if (!section) return;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function hideWelcomePanel() {

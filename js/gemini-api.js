@@ -141,7 +141,8 @@ User context: ${context || 'No specific context provided'}`;
 
     return await generateWithGemini(fullPrompt, {
         temperature: 0.7,
-        maxTokens: 800
+        maxTokens: 800,
+        originalQuestion: question
     });
 }
 
@@ -155,28 +156,28 @@ User context: ${context || 'No specific context provided'}`;
 function generateWithFallback(prompt, options = {}) {
     console.warn('Using fallback responses (API not configured)');
     
-    const lowerPrompt = prompt.toLowerCase();
+    const source = (options.originalQuestion || prompt || '').toLowerCase();
     
     // Detect topic from prompt
-    if (lowerPrompt.includes('nota')) {
+    if (source.includes('nota')) {
         return ELECTION_RESPONSES.nota.explanation;
     }
-    if (lowerPrompt.includes('evm')) {
+    if (source.includes('evm')) {
         return ELECTION_RESPONSES.evm.explanation;
     }
-    if (lowerPrompt.includes('voter id') || lowerPrompt.includes('epic')) {
+    if (source.includes('voter id') || source.includes('epic')) {
         return ELECTION_RESPONSES.voterId.explanation;
     }
-    if (lowerPrompt.includes('first time') || lowerPrompt.includes('beginner')) {
+    if (source.includes('first time') || source.includes('beginner')) {
         return ELECTION_RESPONSES.firstTimeVoter.guidance;
     }
-    if (lowerPrompt.includes('eligible') || lowerPrompt.includes('age')) {
+    if (source.includes('eligible') || source.includes('age')) {
         return ELECTION_RESPONSES.eligibility.info;
     }
-    if (lowerPrompt.includes('register')) {
+    if (source.includes('register')) {
         return ELECTION_RESPONSES.registration.steps;
     }
-    if (lowerPrompt.includes('how') || lowerPrompt.includes('process')) {
+    if (source.includes('how') || source.includes('process')) {
         return ELECTION_RESPONSES.votingProcess.steps;
     }
 

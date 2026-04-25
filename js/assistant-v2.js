@@ -36,10 +36,64 @@ class ElectionAssistantV2 {
         return ['How does EVM work?', 'What is NOTA?', 'Give my final checklist'];
     }
 
+    getWelcomeMessages() {
+        const hour = new Date().getHours();
+        const profile = this.getUserProfile();
+        const timeGreeting = this.getTimeGreeting(hour);
+
+        if (profile.age) {
+            const stateObj = STATES.find((s) => s.code === profile.state);
+            const resumeContext = stateObj
+                ? this.t(`Last saved state: ${stateObj.name}.`, `Last saved state: ${stateObj.name}.`)
+                : this.t('I can pick up exactly where you paused.', 'Main wahi se continue kar sakta hoon jahan aap ruk gaye the.');
+
+            return [
+                this.t(
+                    `${timeGreeting}! Welcome back to VoteReady India.`,
+                    `${timeGreeting}! Welcome back to VoteReady India.`
+                ),
+                this.t(
+                    `${resumeContext} We will complete your voting plan in minutes.`,
+                    `${resumeContext} Hum aapka voting plan kuch minutes mein complete karenge.`
+                ),
+                this.t('Tell me what you want next: checklist, registration, or polling day prep.', 'Aage kya chahiye batao: checklist, registration, ya polling day prep.')
+            ];
+        }
+
+        return [
+            this.t(
+                `${timeGreeting}! I am your VoteReady India assistant.`,
+                `${timeGreeting}! Main aapka VoteReady India assistant hoon.`
+            ),
+            this.t(
+                'I will guide you through eligibility, registration, and voting day without confusion.',
+                'Main aapko eligibility, registration, aur voting day simple steps mein guide karunga.'
+            ),
+            this.t('Start with your age, and I will personalize everything.', 'Age se start karo, baaki sab main personalize kar dunga.')
+        ];
+    }
+
     async handleMessage(userMessage) {
         const message = userMessage.trim();
         const lower = message.toLowerCase();
         const parsed = parseMessage(message);
+
+        if (this.isGreetingMessage(lower)) {
+            return this.withFollowUp(
+                this.t(
+                    'Great to have you here. I can make this super quick and practical.',
+                    'Aapka swagat hai. Main isse quick aur practical bana deta hoon.'
+                ),
+                this.nextQuestionPrompt()
+            );
+        }
+
+        if (this.isVoterListMissingQuery(lower)) {
+            return this.withFollowUp(
+                this.voterListCorrectionPlaybook(),
+                this.t('Share your state so I can add the right local escalation contact.', 'State batao, main local escalation contact bhi de dunga.')
+            );
+        }
 
         const maybeAge = this.extractAge(lower);
         if (maybeAge) {
@@ -187,6 +241,13 @@ class ElectionAssistantV2 {
         );
     }
 
+    voterListCorrectionPlaybook() {
+        return this.t(
+            'If your name is missing in voter list:\n1) Re-check on https://electoralsearch.eci.gov.in/ with alternate spelling\n2) Submit correction/new enrollment request\n3) Keep acknowledgment/reference number\n4) Follow up with BLO/EO through state election office\n5) If urgent, call 1950 and escalate with reference number',
+            'Agar voter list mein naam missing hai:\n1) https://electoralsearch.eci.gov.in/ par alternate spelling se dobara check karo\n2) Correction/new enrollment request submit karo\n3) Acknowledgment/reference number save karo\n4) BLO/EO se state election office ke through follow-up karo\n5) Urgent ho to 1950 par call karke reference number ke saath escalate karo'
+        );
+    }
+
     explainEvmSimple() {
         return this.withFollowUp(
             this.t(
@@ -256,6 +317,38 @@ class ElectionAssistantV2 {
 
     t(en, hi) {
         return this.language === 'hindi' ? hi : en;
+    }
+
+    getTimeGreeting(hour) {
+        if (hour < 12) {
+            return this.t('Good morning', 'Good morning');
+        }
+        if (hour < 17) {
+            return this.t('Good afternoon', 'Good afternoon');
+        }
+        return this.t('Good evening', 'Good evening');
+    }
+
+    isGreetingMessage(lower) {
+        return (
+            lower === 'hi' ||
+            lower === 'hello' ||
+            lower === 'hey' ||
+            lower === 'namaste' ||
+            lower === 'hii' ||
+            lower === 'yo'
+        );
+    }
+
+    isVoterListMissingQuery(lower) {
+        return (
+            lower.includes('name is missing') ||
+            lower.includes('name missing') ||
+            lower.includes('not in voter list') ||
+            lower.includes('missing in voter list') ||
+            lower.includes('not in electoral roll') ||
+            lower.includes('naam missing')
+        );
     }
 
     logMessage(userMessage, assistantResponse) {
