@@ -74,7 +74,13 @@ class ElectionAssistantV2 {
     }
 
     async handleMessage(userMessage) {
-        const message = userMessage.trim();
+        const message = sanitizeUserInput(userMessage);
+        if (!message) {
+            return this.t(
+                'Please type a short question so I can guide you.',
+                'Please ek chhota sa question type karo, main guide karta hoon.'
+            );
+        }
         const lower = message.toLowerCase();
         const parsed = parseMessage(message);
 
@@ -147,10 +153,9 @@ class ElectionAssistantV2 {
     }
 
     extractAge(lower) {
-        const m = lower.match(/\b(\d{1,3})\b/);
-        if (!m) return null;
-        const age = Number(m[1]);
-        return age >= 1 && age <= 120 ? age : null;
+        // Use centralized validation rules to avoid diverging constraints.
+        const result = extractAndValidateAge(lower);
+        return result.ok ? result.age : null;
     }
 
     extractVoterIdStatus(lower) {

@@ -33,6 +33,7 @@ It combines:
 - **Context-aware intelligence:** responses adapt to user age, voter ID status, and state.
 - **Action-first responses:** every key answer includes clear "next best step".
 - **English + Hinglish:** natural mixed-language support for accessibility.
+- **Accessibility-first UI:** keyboard-friendly controls, ARIA live regions, skip-link, and high-contrast focus states.
 - **Explainers for complex topics:** EVM and NOTA explained in plain, practical terms.
 - **Progress tracker:** visible 3-step journey for confidence and completion.
 - **Real-world links:** official Election Commission and electoral search resources included.
@@ -64,13 +65,22 @@ Gemini is used as an **intelligence layer**, not a replacement for workflow logi
 
 This architecture ensures reliability during live demos and hackathon judging.
 
+## Google Services Usage
+
+- **Gemini (primary AI):** handles contextual follow-up responses with user profile context.
+- **Google Sheets-style telemetry (mock):** `js/google-services.js` persists structured session rows (age, voter ID status, state, language, message count).
+- **Why it matters:** demonstrates how citizen interaction data can be stored for civic program insights and service improvement.
+- **Safe by default:** no real Sheets credentials are hardcoded in frontend.
+
 ## Tech Stack
 
 - Vanilla HTML/CSS/JavaScript (lightweight, fast)
 - Modular frontend architecture
   - UI layer: `index.html`, `styles.css`, `js/app-v2.js`
+  - Validation layer: `js/validation.js`
   - Assistant logic: `js/assistant-v2.js`
   - AI layer: `js/gemini-api.js`
+  - Google services layer: `js/google-services.js`
   - Data layer: `data/*.js`
 
 ## Run Locally
@@ -89,6 +99,26 @@ python -m http.server 8000
 
 You can also open `index.html` directly, but local server gives better compatibility.
 
+## Testing and Robustness
+
+- Smoke test file: `tests/smoke-tests.js`
+- Run in browser console:
+
+```javascript
+runSmokeTests()
+```
+
+- Covered checks:
+  - Empty input handling
+  - Invalid age extraction
+  - Valid message acceptance
+  - Assistant function availability
+
+Core runtime protections:
+- Length and empty-input validation before processing
+- Defensive fallback paths when Gemini is unavailable
+- Graceful handling of unexpected user text
+
 ## Project Size & Performance
 
 - No heavy frameworks
@@ -96,6 +126,13 @@ You can also open `index.html` directly, but local server gives better compatibi
 - Lightweight static assets
 - Fast startup and smooth chat interactions
 - Repository comfortably under 10 MB
+
+## Security Notes
+
+- API keys are loaded from local config/environment only.
+- Frontend never commits secrets.
+- User input is normalized and bounded before assistant processing.
+- Gemini key presence is validated safely before API requests.
 
 ## Future Scope
 

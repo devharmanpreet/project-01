@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a href="#messageInput" class="skip-link">Skip to assistant input</a>
     <div class="container">
-        <section class="landing-page" id="landingPage">
+        <section class="landing-page" id="landingPage" role="region" aria-label="Landing page">
             <header class="landing-header">
                 <div class="landing-brand">Election Guide Assistant (India)</div>
-                <button type="button" class="landing-ghost-btn" id="heroHowItWorksTop">How it Works</button>
+                <button type="button" class="landing-ghost-btn" id="heroHowItWorksTop" aria-label="Jump to how it works section">How it Works</button>
             </header>
 
             <section class="hero-section fade-up">
@@ -23,8 +24,8 @@
                     No confusion, only what to do next.
                 </p>
                 <div class="hero-actions">
-                    <button type="button" class="landing-primary-btn" id="heroGetStarted">Get Started</button>
-                    <button type="button" class="landing-secondary-btn" id="heroHowItWorks">How it Works</button>
+                    <button type="button" class="landing-primary-btn" id="heroGetStarted" aria-label="Open election assistant chat">Get Started</button>
+                    <button type="button" class="landing-secondary-btn" id="heroHowItWorks" aria-label="Show how the assistant works">How it Works</button>
                 </div>
             </section>
 
@@ -90,7 +91,7 @@
             <section class="landing-cta fade-up">
                 <h2>Ready to plan your vote?</h2>
                 <p>Start now and get a personalized election action plan in under a minute.</p>
-                <button type="button" class="landing-primary-btn" id="landingStartNow">Start Now</button>
+                <button type="button" class="landing-primary-btn" id="landingStartNow" aria-label="Start using election assistant">Start Now</button>
             </section>
 
             <footer class="landing-footer">
@@ -98,7 +99,7 @@
             </footer>
         </section>
 
-        <div class="app-shell" id="appShell" aria-hidden="true">
+        <div class="app-shell" id="appShell" aria-hidden="true" role="application" aria-label="Election assistant application">
             <!-- Header -->
             <header class="header">
                 <div class="header-content">
@@ -109,7 +110,7 @@
                             <p class="subtitle">Your personal voting co-pilot for India</p>
                         </div>
                     </div>
-                    <button class="language-toggle" id="languageToggle" title="Switch language">
+                    <button class="language-toggle" id="languageToggle" title="Switch language" aria-label="Switch language between English and Hinglish">
                         EN / Hinglish
                     </button>
                 </div>
@@ -182,30 +183,34 @@
                 </aside>
 
                 <!-- Chat Area -->
-                <main class="chat-area">
+                <main class="chat-area" role="main">
                     <section class="welcome-panel" id="welcomePanel">
                         <p class="welcome-eyebrow">Civic-tech assistant</p>
                         <h2>Plan your vote in under 60 seconds.</h2>
                         <p class="welcome-copy">Answer a few quick questions and get personalized next steps for eligibility, registration, and polling day. Works in English + Hinglish.</p>
                         <div class="welcome-actions">
-                            <button type="button" class="welcome-cta strong" data-action="start-journey">Start my journey</button>
-                            <button type="button" class="welcome-cta" data-action="quick-ready">Check if I am ready</button>
+                            <button type="button" class="welcome-cta strong" data-action="start-journey" aria-label="Start guided journey">Start my journey</button>
+                            <button type="button" class="welcome-cta" data-action="quick-ready" aria-label="Get readiness checklist">Check if I am ready</button>
                         </div>
                     </section>
 
-                    <div class="messages-container" id="messagesContainer">
+                    <div class="messages-container" id="messagesContainer" role="log" aria-live="polite" aria-relevant="additions">
                     </div>
+                    <p id="a11yStatus" class="sr-only" aria-live="polite"></p>
 
                     <div class="input-area">
-                        <form class="message-form" id="messageForm">
+                        <form class="message-form" id="messageForm" aria-label="Ask election question">
+                            <label for="messageInput" class="sr-only">Type your election question</label>
                             <input 
                                 type="text" 
                                 class="message-input" 
                                 id="messageInput" 
                                 placeholder="Ask in English or Hinglish... e.g. I am 19 and don't have voter ID"
                                 autocomplete="off"
+                                aria-label="Election question input"
+                                maxlength="300"
                             >
-                            <button type="submit" class="send-button" title="Send message">
+                            <button type="submit" class="send-button" title="Send message" aria-label="Send message">
                                 <span>Ask</span>
                                 <span class="send-icon">➤</span>
                             </button>
@@ -230,6 +235,8 @@
     <script src="data/responses.js"></script>
     <!-- Load utilities -->
     <script src="js/utils.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/google-services.js"></script>
     <script src="js/gemini-api.js"></script>
     <script src="js/assistant-v2.js"></script>
     <!-- Initialize app -->
@@ -240,5 +247,6 @@
         }
     </script>
     <script src="js/app-v2.js"></script>
+    <script src="tests/smoke-tests.js"></script>
 </body>
 </html>

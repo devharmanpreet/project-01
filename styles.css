@@ -8,6 +8,33 @@
     box-sizing: border-box;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    z-index: 9999;
+    background: #0f172a;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.skip-link:focus {
+    left: 8px;
+}
+
 :root {
     --primary-blue: #2563eb;
     --primary-dark: #0b1220;
@@ -29,6 +56,13 @@ html, body {
     background: radial-gradient(circle at top left, #dbeafe 0%, #eff6ff 32%, #f8fafc 100%);
     color: var(--primary-dark);
     overflow: hidden;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid #0f62fe;
+    outline-offset: 2px;
 }
 
 /* ================================================================

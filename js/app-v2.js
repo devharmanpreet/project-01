@@ -30,8 +30,21 @@ function setupEventListeners() {
 async function handleMessageSubmit(event) {
     event.preventDefault();
     const input = document.getElementById('messageInput');
-    const text = input.value.trim();
-    if (!text || app.isLoading) return;
+    if (app.isLoading) return;
+
+    const validated = validateMessageInput(input.value);
+    if (!validated.ok) {
+        if (validated.reason === 'empty') {
+            announceForAccessibility('Please enter a message before sending.');
+            return;
+        }
+        if (validated.reason === 'too_long') {
+            input.value = validated.value;
+            announceForAccessibility('Message was too long and has been shortened to 300 characters.');
+            return;
+        }
+    }
+    const text = validated.value;
     input.value = '';
 
     await processUserMessage(text);
@@ -50,6 +63,7 @@ async function processUserMessage(text) {
         updateProgressTracker();
         hideWelcomePanel();
         assistant.logMessage(text, response);
+        persistSessionForGoogleServices();
     } catch (error) {
         removeTypingIndicator();
         addMessageToChat('Something went wrong. Please try again once.', 'assistant');
@@ -75,6 +89,7 @@ function addMessageToChat(text, sender) {
     message.appendChild(time);
     container.appendChild(message);
     container.scrollTop = container.scrollHeight;
+    announceForAccessibility(`${sender} message added`);
 }
 
 function showTypingIndicator() {
@@ -105,14 +120,17 @@ function renderWelcomeMessage() {
 function renderDynamicQuickReplies() {
     const hints = document.getElementById('quickRepliesBar');
     hints.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     assistant.getQuickReplies().forEach((item) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'hint-button';
         btn.textContent = item;
+        btn.setAttribute('aria-label', `Quick reply: ${item}`);
         btn.addEventListener('click', () => processUserMessage(item));
-        hints.appendChild(btn);
+        fragment.appendChild(btn);
     });
+    hints.appendChild(fragment);
 }
 
 function handlePresetAction(action) {
@@ -146,6 +164,7 @@ function toggleLanguage() {
             : 'Language set to Hinglish mode.',
         'assistant'
     );
+    persistSessionForGoogleServices();
 }
 
 function populateStateSuggestions() {
@@ -177,6 +196,7 @@ function startAssistantExperience() {
 
     renderWelcomeMessage();
     updateProgressTracker();
+    persistSessionForGoogleServices();
 
     const input = document.getElementById('messageInput');
     if (input) input.focus();
@@ -191,6 +211,12 @@ function scrollToHowItWorks() {
 function hideWelcomePanel() {
     const panel = document.getElementById('welcomePanel');
     if (panel) panel.style.display = 'none';
+}
+
+function announceForAccessibility(message) {
+    const statusNode = document.getElementById('a11yStatus');
+    if (!statusNode) return;
+    statusNode.textContent = message;
 }
 
 if (document.readyState === 'loading') {

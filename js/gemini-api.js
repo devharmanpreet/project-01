@@ -36,7 +36,11 @@ function setGeminiApiKey(apiKey) {
  * @returns {Boolean}
  */
 function isApiKeyConfigured() {
-    return GEMINI_CONFIG.apiKey !== 'YOUR_GEMINI_API_KEY';
+    return Boolean(
+        GEMINI_CONFIG.apiKey &&
+        GEMINI_CONFIG.apiKey !== 'YOUR_GEMINI_API_KEY' &&
+        GEMINI_CONFIG.apiKey !== 'your_api_key_here'
+    );
 }
 
 /**
