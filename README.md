@@ -2,6 +2,10 @@
 
 **Your AI voting co-pilot for India - from confusion to confident vote in under 60 seconds.**
 
+## Live Demo
+
+- [https://project-01.addoners.net/](https://project-01.addoners.net/)
+
 ## Why This Matters
 
 India has millions of first-time voters every cycle. Most of them face practical confusion:
