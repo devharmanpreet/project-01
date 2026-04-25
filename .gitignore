@@ -1,0 +1,104 @@
+# Node modules and dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm
+.yarn
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-project
+.sublime-workspace
+.project
+.pydevproject
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build and dist directories
+dist/
+build/
+out/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Log files
+logs/
+*.log
+
+# Package manager lock files (optional - uncomment if not shared)
+# package-lock.json
+# yarn.lock
+
+# Local development
+localhost.key
+localhost.crt
+
+# Configuration with secrets
+config.local.js
+secrets.json
+
+# Browser cache
+.cache/
+.vuepress/dist
+
+# Static assets that shouldn't be tracked
+*.psd
+*.ai
+
+# Test coverage
+coverage/
+.nyc_output
+
+# Dependency directories
+bower_components/
+
+# API keys and credentials - IMPORTANT!
+# Never commit API keys or sensitive data
+.env
+.env.js
+.env.local
+.env.*.local
+*api-key*
+*secret*
+*credential*
+*token*
+config.local.js
+
+# Keep the project small - exclude large files
+*.zip
+*.rar
+*.tar
+*.tar.gz
+
+# IDE specific
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Node
+.node_modules/
+*.tgz
+
+# IDE - VSCode specific
+.vscode-test/

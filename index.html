@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteReady India | Election Guide Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">VoteReady India</span>
+                    <div class="logo-text">
+                        <h1>Election Guide Assistant</h1>
+                        <p class="subtitle">Your personal voting co-pilot for India</p>
+                    </div>
+                </div>
+                <button class="language-toggle" id="languageToggle" title="Switch language">
+                    EN / Hinglish
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Left Sidebar - Progress Tracker -->
+            <aside class="sidebar">
+                <div class="progress-section">
+                    <h3 class="section-title">Journey Progress</h3>
+                    <div class="progress-tracker">
+                        <div class="progress-step active" id="step-1">
+                            <div class="progress-dot">1</div>
+                            <span class="step-label">Eligibility</span>
+                        </div>
+                        <div class="progress-bar"></div>
+                        <div class="progress-step" id="step-2">
+                            <div class="progress-dot">2</div>
+                            <span class="step-label">Registration</span>
+                        </div>
+                        <div class="progress-bar"></div>
+                        <div class="progress-step" id="step-3">
+                            <div class="progress-dot">3</div>
+                            <span class="step-label">Voting Day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-section" style="margin-top: 30px;">
+                    <h3 class="section-title">Action Timeline</h3>
+                    <div class="timeline" id="timelineCards">
+                        <div class="timeline-item">
+                            <div class="timeline-dot">1</div>
+                            <div class="timeline-content">
+                                <p class="timeline-date">Today</p>
+                                <p class="timeline-label">Check eligibility and status</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">2</div>
+                            <div class="timeline-content">
+                                <p class="timeline-date">Before deadline</p>
+                                <p class="timeline-label">Register or correct details</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">3</div>
+                            <div class="timeline-content">
+                                <p class="timeline-date">Polling day</p>
+                                <p class="timeline-label">Carry valid ID and vote confidently</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="quick-links-section" style="margin-top: 30px;">
+                    <h3 class="section-title">Trusted Links</h3>
+                    <a href="https://eci.gov.in/" target="_blank" class="quick-link">
+                        <span>Election Commission India</span>
+                    </a>
+                    <a href="https://electoralsearch.eci.gov.in/" target="_blank" class="quick-link">
+                        <span>Search voter status</span>
+                    </a>
+                    <a href="tel:1950" class="quick-link">
+                        <span>Voter helpline: 1950</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Chat Area -->
+            <main class="chat-area">
+                <section class="welcome-panel" id="welcomePanel">
+                    <p class="welcome-eyebrow">Civic-tech assistant</p>
+                    <h2>Plan your vote in under 60 seconds.</h2>
+                    <p class="welcome-copy">Answer a few quick questions and get personalized next steps for eligibility, registration, and polling day. Works in English + Hinglish.</p>
+                    <div class="welcome-actions">
+                        <button type="button" class="hint-button strong" data-action="start-journey">Start my journey</button>
+                        <button type="button" class="hint-button" data-action="quick-ready">Check if I am ready</button>
+                    </div>
+                </section>
+
+                <div class="messages-container" id="messagesContainer">
+                </div>
+
+                <div class="input-area">
+                    <form class="message-form" id="messageForm">
+                        <input 
+                            type="text" 
+                            class="message-input" 
+                            id="messageInput" 
+                            placeholder="Ask in English or Hinglish... e.g. I am 19 and don't have voter ID"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="send-button" title="Send message">
+                            <span>Ask</span>
+                            <span class="send-icon">➤</span>
+                        </button>
+                    </form>
+                    <div class="input-hints">
+                        <button type="button" class="hint-button" data-action="start-journey">
+                            <span>Start onboarding</span>
+                        </button>
+                        <button type="button" class="hint-button" data-action="registration-help">
+                            <span>Registration help</span>
+                        </button>
+                        <button type="button" class="hint-button" data-action="evm-explainer">
+                            <span>EVM in simple words</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <datalist id="stateSuggestions"></datalist>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Load environment variables first (optional .env.js file) -->
+    <script src=".env.js"></script>
+    <!-- Load configuration -->
+    <script src="config.js"></script>
+    <!-- Load data -->
+    <script src="data/states.js"></script>
+    <script src="data/election-data.js"></script>
+    <script src="data/responses.js"></script>
+    <!-- Load utilities -->
+    <script src="js/utils.js"></script>
+    <script src="js/gemini-api.js"></script>
+    <script src="js/assistant-v2.js"></script>
+    <!-- Initialize app -->
+    <script>
+        // Initialize Gemini API with configuration
+        if (typeof initializeGeminiApi === 'function') {
+            initializeGeminiApi();
+        }
+    </script>
+    <script src="js/app-v2.js"></script>
+</body>
+</html>
