@@ -4,7 +4,8 @@
  */
 const INPUT_RULES = {
     maxMessageLength: 300,
-    minAge: 1,
+    // Age validation: strict 0–120 range as required.
+    minAge: 0,
     maxAge: 120
 };
 

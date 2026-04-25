@@ -16,8 +16,6 @@ const app = {
  * Initialize the application
  */
 function initializeApp() {
-    console.log('🗳️ Election Guide Assistant initializing...');
-    
     // Set up event listeners
     setupEventListeners();
     
@@ -36,7 +34,6 @@ function initializeApp() {
     // Test API configuration (optional)
     checkApiConfiguration();
     
-    console.log('✅ Application initialized successfully');
 }
 
 /**
@@ -107,7 +104,6 @@ async function handleMessageSubmit(event) {
         updateProgressTracker();
         
     } catch (error) {
-        console.error('Error processing message:', error);
         removeTypingIndicator();
         addMessageToChat('Sorry, I encountered an error. Please try again.', 'assistant');
     } finally {
@@ -426,19 +422,15 @@ function restoreSession() {
  */
 async function checkApiConfiguration() {
     if (!isApiKeyConfigured()) {
-        console.warn('⚠️ Gemini API not configured. Using fallback responses.');
         // Optionally show a message to user
     } else {
         try {
             const isWorking = await testGeminiApi();
             if (isWorking) {
-                console.log('✅ Gemini API is configured and working');
                 logAnalytics('api_ready');
             } else {
-                console.warn('⚠️ Gemini API test failed');
             }
         } catch (error) {
-            console.error('Error testing API:', error);
         }
     }
 }
@@ -448,7 +440,6 @@ async function checkApiConfiguration() {
  */
 function exportSessionData() {
     const data = exportForSheets();
-    console.log('Session data:', data);
     return data;
 }
 

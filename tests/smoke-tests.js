@@ -33,11 +33,5 @@ function runSmokeTests() {
     });
 
     const failed = tests.filter((t) => !t.pass);
-    console.table(tests);
-    if (failed.length) {
-        console.warn(`Smoke tests: ${failed.length} failed`);
-    } else {
-        console.info('Smoke tests: all passed');
-    }
     return { total: tests.length, failed: failed.length };
 }

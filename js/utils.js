@@ -46,7 +46,7 @@ function storeData(key, value) {
     try {
         localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-        console.warn('Failed to store data:', e);
+        // Intentionally silent in production; storage failures should not break UX.
     }
 }
 
@@ -60,7 +60,6 @@ function retrieveData(key) {
         const data = localStorage.getItem(key);
         return data ? JSON.parse(data) : null;
     } catch (e) {
-        console.warn('Failed to retrieve data:', e);
         return null;
     }
 }
@@ -73,7 +72,7 @@ function clearData(key) {
     try {
         localStorage.removeItem(key);
     } catch (e) {
-        console.warn('Failed to clear data:', e);
+        // Intentionally silent.
     }
 }
 
@@ -296,8 +295,6 @@ function logAnalytics(event, data = {}) {
     let logs = retrieveData('analytics_logs') || [];
     logs.push(analytics);
     storeData('analytics_logs', logs);
-    
-    console.log('[Analytics]', event, data);
 }
 
 /**

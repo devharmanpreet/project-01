@@ -13,6 +13,10 @@ const GEMINI_CONFIG = {
     maxTokens: 1000
 };
 
+function shouldDebugLog() {
+    return typeof CONFIG !== 'undefined' && CONFIG.DEBUG_MODE === true;
+}
+
 // Initialize API key from config
 function initializeGeminiApi() {
     if (typeof CONFIG !== 'undefined') {
@@ -109,7 +113,9 @@ async function generateWithGemini(prompt, options = {}) {
 
         throw new Error('Unexpected API response format');
     } catch (error) {
-        console.error('Gemini API error:', error);
+        if (shouldDebugLog()) {
+            console.error('Gemini API error:', error);
+        }
         // Fallback to mock responses if API fails
         return generateWithFallback(prompt, options);
     }
@@ -158,7 +164,9 @@ User context: ${context || 'No specific context provided'}`;
  * @returns {String} Response
  */
 function generateWithFallback(prompt, options = {}) {
-    console.warn('Using fallback responses (API not configured)');
+    if (shouldDebugLog()) {
+        console.warn('Using fallback responses (API not configured)');
+    }
     
     const source = (options.originalQuestion || prompt || '').toLowerCase();
     
@@ -316,7 +324,9 @@ function handleApiError(error) {
  */
 async function testGeminiApi() {
     if (!isApiKeyConfigured()) {
-        console.warn('Gemini API key not configured');
+        if (shouldDebugLog()) {
+            console.warn('Gemini API key not configured');
+        }
         return false;
     }
 
@@ -324,7 +334,9 @@ async function testGeminiApi() {
         const response = await generateWithGemini('Say "Hello" in one word.');
         return response && response.length > 0;
     } catch (error) {
-        console.error('Gemini API test failed:', error);
+        if (shouldDebugLog()) {
+            console.error('Gemini API test failed:', error);
+        }
         return false;
     }
 }

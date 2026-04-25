@@ -28,10 +28,6 @@ function loadEnvironment() {
         CONFIG.API_ENDPOINT = ENV.API_ENDPOINT || CONFIG.API_ENDPOINT;
         CONFIG.GOOGLE_SHEET_ID = ENV.GOOGLE_SHEET_ID || CONFIG.GOOGLE_SHEET_ID;
         CONFIG.DEBUG_MODE = ENV.DEBUG_MODE || CONFIG.DEBUG_MODE;
-        
-        if (CONFIG.DEBUG_MODE) {
-            console.log('✅ Environment loaded from .env.js');
-        }
     }
     
     // Try to get from localStorage (set by user in settings)
@@ -39,10 +35,6 @@ function loadEnvironment() {
     if (stored) {
         CONFIG.GEMINI_API_KEY = stored.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY;
         CONFIG.DEBUG_MODE = stored.DEBUG_MODE || CONFIG.DEBUG_MODE;
-        
-        if (CONFIG.DEBUG_MODE) {
-            console.log('✅ Configuration loaded from localStorage');
-        }
     }
 }
 

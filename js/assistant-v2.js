@@ -103,6 +103,15 @@ class ElectionAssistantV2 {
 
         const maybeAge = this.extractAge(lower);
         if (maybeAge) {
+            if (maybeAge === 0) {
+                return this.withFollowUp(
+                    this.t(
+                        'Age can’t be 0. Please enter a valid age between 0 and 120.',
+                        'Age 0 nahi ho sakti. Please 0 se 120 ke beech valid age batao.'
+                    ),
+                    this.t('Try again with your age (example: "I am 19").', 'Example: "I am 19" type karo.')
+                );
+            }
             this.profile.age = maybeAge;
             this.session.userProfile.age = maybeAge;
             saveSession(this.session);
@@ -149,6 +158,15 @@ class ElectionAssistantV2 {
         if (parsed.detected.eligibility) return this.eligibilityPlaybook();
 
         const contextual = await this.askGeminiContextually(message);
+        if (!this.isContextuallyUseful(contextual)) {
+            return this.withFollowUp(
+                this.t(
+                    "I didn’t fully understand that, but I can guide you through voting eligibility or the election process.",
+                    "Main poori tarah samajh nahi paaya, par main aapko voting eligibility ya election process step-by-step guide kar sakta hoon."
+                ),
+                this.nextQuestionPrompt()
+            );
+        }
         return this.withFollowUp(contextual, this.nextQuestionPrompt());
     }
 
@@ -322,6 +340,20 @@ class ElectionAssistantV2 {
 
     t(en, hi) {
         return this.language === 'hindi' ? hi : en;
+    }
+
+    isContextuallyUseful(text) {
+        if (typeof text !== 'string') return false;
+        const trimmed = text.trim();
+        if (!trimmed) return false;
+
+        // If Gemini fallback returns a generic assistant menu, treat as not useful for unknown queries.
+        if (trimmed.startsWith("I'm your Election Guide Assistant")) return false;
+
+        // If it doesn't look election-related, prefer deterministic fallback guidance.
+        if (typeof isElectionRelated === 'function' && !isElectionRelated(trimmed)) return false;
+
+        return true;
     }
 
     getTimeGreeting(hour) {

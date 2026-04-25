@@ -83,16 +83,10 @@ Check if API is configured correctly:
 
 **In Browser Console (F12):**
 ```javascript
-// Check if config is loaded
-console.log(CONFIG);
-
-// Check if API key is set
-console.log('API Key configured:', isApiConfigured());
-
-// Test the API connection
-testGeminiApi().then(result => {
-    console.log('API Test Result:', result);
-});
+// Optional checks (no logging required)
+CONFIG
+isApiConfigured()
+testGeminiApi()
 ```
 
 **Expected output:**
